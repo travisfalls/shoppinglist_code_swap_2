@@ -25,9 +25,6 @@ public class ShoppingListGroup {
 	private String name;
 
 	@NotNull
-	private long sorting;
-
-	@NotNull
 	private Date createdUtc;
 
 	@NotNull
@@ -60,15 +57,6 @@ public class ShoppingListGroup {
 
 	public void setName(String name) {
 		this.name = name;
-		updateModifiedUtc();
-	}
-
-	public long getSorting() {
-		return sorting;
-	}
-
-	public void setSorting(long sorting) {
-		this.sorting = sorting;
 		updateModifiedUtc();
 	}
 

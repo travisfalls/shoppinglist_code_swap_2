@@ -34,9 +34,6 @@ public class ShoppingList {
 	@NotBlank
 	private String color;
 
-	@NotNull
-	private long sorting;
-
 	@ManyToOne
 	@JoinColumn(name = "shopping_list_group_id")
 	private ShoppingListGroup shoppingListGroup;
@@ -92,15 +89,6 @@ public class ShoppingList {
 
 	public void setColor(String color) {
 		this.color = color;
-		updateModifiedUtc();
-	}
-
-	public long getSorting() {
-		return sorting;
-	}
-
-	public void setSorting(long sorting) {
-		this.sorting = sorting;
 		updateModifiedUtc();
 	}
 
