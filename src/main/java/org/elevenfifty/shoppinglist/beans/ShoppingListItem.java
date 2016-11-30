@@ -30,9 +30,6 @@ public class ShoppingListItem {
 	@NotEmpty
 	private String name;
 
-	@NotNull
-	private long sorting;
-
 	@ManyToOne
 	@JoinColumn(name = "shopping_list_item_priority_id")
 	@NotNull
@@ -84,15 +81,6 @@ public class ShoppingListItem {
 
 	public void setName(String name) {
 		this.name = name;
-		updateModifiedUtc();
-	}
-
-	public long getSorting() {
-		return sorting;
-	}
-
-	public void setSorting(long sorting) {
-		this.sorting = sorting;
 		updateModifiedUtc();
 	}
 
