@@ -39,7 +39,6 @@ public class ShoppingList {
 
 	@ManyToOne
 	@JoinColumn(name = "shopping_list_group_id")
-	@NotNull
 	private ShoppingListGroup shoppingListGroup;
 
 	@NotNull
@@ -50,5 +49,94 @@ public class ShoppingList {
 
 	@OneToMany
 	private Set<ShoppingListItem> shoppingListItems;
+
+	public ShoppingList() {
+		setCreatedUtc(new Date(System.currentTimeMillis()));
+		updateModifiedUtc();
+	}
+
+	private void updateModifiedUtc() {
+		setModifiedUtc(new Date(System.currentTimeMillis()));
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+		updateModifiedUtc();
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+		updateModifiedUtc();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		updateModifiedUtc();
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+		updateModifiedUtc();
+	}
+
+	public long getSorting() {
+		return sorting;
+	}
+
+	public void setSorting(long sorting) {
+		this.sorting = sorting;
+		updateModifiedUtc();
+	}
+
+	public ShoppingListGroup getShoppingListGroup() {
+		return shoppingListGroup;
+	}
+
+	public void setShoppingListGroup(ShoppingListGroup shoppingListGroup) {
+		this.shoppingListGroup = shoppingListGroup;
+		updateModifiedUtc();
+	}
+
+	public Date getCreatedUtc() {
+		return createdUtc;
+	}
+
+	public void setCreatedUtc(Date createdUtc) {
+		this.createdUtc = createdUtc;
+		updateModifiedUtc();
+	}
+
+	public Date getModifiedUtc() {
+		return modifiedUtc;
+	}
+
+	public void setModifiedUtc(Date modifiedUtc) {
+		this.modifiedUtc = modifiedUtc;
+	}
+
+	public Set<ShoppingListItem> getShoppingListItems() {
+		return shoppingListItems;
+	}
+
+	public void setShoppingListItems(Set<ShoppingListItem> shoppingListItems) {
+		this.shoppingListItems = shoppingListItems;
+		updateModifiedUtc();
+	}
 
 }

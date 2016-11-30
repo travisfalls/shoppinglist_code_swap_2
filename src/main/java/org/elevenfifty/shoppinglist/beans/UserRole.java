@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,8 +21,10 @@ public class UserRole {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	@NotNull
-	private long userId;
+	private User user;
 
 	@NotBlank
 	private String role;
@@ -30,5 +34,58 @@ public class UserRole {
 
 	@NotNull
 	private Date modifiedUtc;
+
+	public UserRole() {
+		setCreatedUtc(new Date(System.currentTimeMillis()));
+		updateModifiedUtc();
+	}
+
+	private void updateModifiedUtc() {
+		setModifiedUtc(new Date(System.currentTimeMillis()));
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+		updateModifiedUtc();
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+		updateModifiedUtc();
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+		updateModifiedUtc();
+	}
+
+	public Date getCreatedUtc() {
+		return createdUtc;
+	}
+
+	public void setCreatedUtc(Date createdUtc) {
+		this.createdUtc = createdUtc;
+		updateModifiedUtc();
+	}
+
+	public Date getModifiedUtc() {
+		return modifiedUtc;
+	}
+
+	public void setModifiedUtc(Date modifiedUtc) {
+		this.modifiedUtc = modifiedUtc;
+	}
 
 }

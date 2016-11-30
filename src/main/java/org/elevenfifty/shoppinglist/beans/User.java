@@ -22,7 +22,7 @@ public class User {
 	private long id;
 
 	@NotBlank
-	private String userName;
+	private String email;
 
 	@NotBlank
 	private String password;
@@ -41,5 +41,97 @@ public class User {
 
 	@OneToMany
 	private Set<ShoppingList> shoppingLists;
+
+	@OneToMany
+	private Set<UserRole> userRoles;
+
+	public User() {
+		setCreatedUtc(new Date(System.currentTimeMillis()));
+		updateModifiedUtc();
+	}
+
+	private void updateModifiedUtc() {
+		setModifiedUtc(new Date(System.currentTimeMillis()));
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+		updateModifiedUtc();
+	}
+
+	public String getUserName() {
+		return email;
+	}
+
+	public void setUserName(String userName) {
+		this.email = userName;
+		updateModifiedUtc();
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+		updateModifiedUtc();
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+		updateModifiedUtc();
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+		updateModifiedUtc();
+	}
+
+	public Date getCreatedUtc() {
+		return createdUtc;
+	}
+
+	public void setCreatedUtc(Date createdUtc) {
+		this.createdUtc = createdUtc;
+		updateModifiedUtc();
+	}
+
+	public Date getModifiedUtc() {
+		return modifiedUtc;
+	}
+
+	public void setModifiedUtc(Date modifiedUtc) {
+		this.modifiedUtc = modifiedUtc;
+	}
+
+	public Set<ShoppingList> getShoppingLists() {
+		return shoppingLists;
+	}
+
+	public void setShoppingLists(Set<ShoppingList> shoppingLists) {
+		this.shoppingLists = shoppingLists;
+		updateModifiedUtc();
+	}
+
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+		updateModifiedUtc();
+	}
 
 }

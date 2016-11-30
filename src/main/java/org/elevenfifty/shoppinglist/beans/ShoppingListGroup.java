@@ -36,4 +36,66 @@ public class ShoppingListGroup {
 	@OneToMany
 	private Set<ShoppingList> shoppingLists;
 
+	public ShoppingListGroup() {
+		setCreatedUtc(new Date(System.currentTimeMillis()));
+		updateModifiedUtc();
+	}
+
+	private void updateModifiedUtc() {
+		setModifiedUtc(new Date(System.currentTimeMillis()));
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+		updateModifiedUtc();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		updateModifiedUtc();
+	}
+
+	public long getSorting() {
+		return sorting;
+	}
+
+	public void setSorting(long sorting) {
+		this.sorting = sorting;
+		updateModifiedUtc();
+	}
+
+	public Date getCreatedUtc() {
+		return createdUtc;
+	}
+
+	public void setCreatedUtc(Date createdUtc) {
+		this.createdUtc = createdUtc;
+		updateModifiedUtc();
+	}
+
+	public Date getModifiedUtc() {
+		return modifiedUtc;
+	}
+
+	public void setModifiedUtc(Date modifiedUtc) {
+		this.modifiedUtc = modifiedUtc;
+	}
+
+	public Set<ShoppingList> getShoppingLists() {
+		return shoppingLists;
+	}
+
+	public void setShoppingLists(Set<ShoppingList> shoppingLists) {
+		this.shoppingLists = shoppingLists;
+		updateModifiedUtc();
+	}
+
 }
