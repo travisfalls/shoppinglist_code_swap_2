@@ -9,14 +9,12 @@
 <body layout:fragment="content">
 
 	<div class="container">
-	    <div class="form-wrapper">
-	        <form th:action="@{/login}" method="POST">
-	            <h2 class="form-signin-heading">Sign In</h2>
-                <input type="email" class="form-control" placeholder="Email" id="username" name="username" />
-                <input type="password" class="form-control" placeholder="Password" id="password" name="password" />
-                <button class="btn btn-lg" type="submit">Sign in</button>
-	        </form>
-    	</div>
+        <h1 class="form-signin-heading">Sign In</h1>
+        <form th:action="@{/login}" method="POST">
+               <input type="email" class="form-control" placeholder="Email" id="username" name="username" />
+               <input type="password" class="form-control" placeholder="Password" id="password" name="password" />
+               <button class="btn btn-lg" type="submit">Submit</button>
+        </form>
 	</div>
 </body>
 
