@@ -9,14 +9,7 @@ CREATE TABLE IF NOT EXISTS shopping_list.users (
 	active TINYINT(1) NOT NULL DEFAULT 1,
 	created_utc TIMESTAMP NOT NULL,
 	modified_utc TIMESTAMP NOT NULL,
-	PRIMARY KEY (id));
-	
-CREATE TABLE IF NOT EXISTS shopping_list.user_roles (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	user_id INT UNSIGNED NOT NULL,
-	role VARCHAR(128) NOT NULL,
-	created_utc TIMESTAMP NOT NULL,
-	modified_utc TIMESTAMP NOT NULL,
+	role VARCHAR(128) NOT NULL DEFAULT 'USER',
 	PRIMARY KEY (id));
 
 CREATE TABLE IF NOT EXISTS shopping_list.shopping_list_groups (

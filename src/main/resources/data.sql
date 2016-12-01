@@ -1,6 +1,4 @@
-INSERT INTO shopping_list.users (email, password, full_name, active, created_utc, modified_utc) VALUES ('test@test.com', 'test', 'Test Test', true, '2016-11-30 10:25:00', '2016-11-30 10:25:00');
-
-INSERT INTO shopping_list.user_roles (user_id, role, created_utc, modified_utc) VALUES (1, 'ADMIN', '2016-11-30 10:25:00', '2016-11-30 10:25:00');
+INSERT INTO shopping_list.users (email, password, full_name, active, created_utc, modified_utc, role) VALUES ('test@test.com', 'test', 'Test Test', true, '2016-11-30 10:25:00', '2016-11-30 10:25:00', 'ADMIN');
 
 INSERT INTO shopping_list.shopping_list_groups (name, created_utc, modified_utc) VALUES ('Clothing', '2016-11-30 10:25:00', '2016-11-30 10:25:00');
 

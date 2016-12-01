@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Spring Charity</title>
+</head>
+
+<body lang="en">
+        <div th:replace="snippets/header :: header"></div>
+        <div layout:fragment="content"></div>
+        <div th:replace="snippets/footer :: footer"></div>
+    <div th:replace="snippets/scripts :: scripts"></div>
+</body>
+
+</html>
