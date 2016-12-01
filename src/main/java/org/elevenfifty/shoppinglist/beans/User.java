@@ -39,11 +39,11 @@ public class User {
 	@NotNull
 	private Date modifiedUtc;
 
-	@OneToMany
-	private Set<ShoppingList> shoppingLists;
+	@NotNull
+	private String role;
 
 	@OneToMany
-	private Set<UserRole> userRoles;
+	private Set<ShoppingList> shoppingLists;
 
 	public User() {
 		setCreatedUtc(new Date(System.currentTimeMillis()));
@@ -60,16 +60,14 @@ public class User {
 
 	public void setId(long id) {
 		this.id = id;
-		updateModifiedUtc();
 	}
 
-	public String getUserName() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setUserName(String userName) {
-		this.email = userName;
-		updateModifiedUtc();
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -78,7 +76,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-		updateModifiedUtc();
 	}
 
 	public String getFullName() {
@@ -87,7 +84,6 @@ public class User {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
-		updateModifiedUtc();
 	}
 
 	public boolean isActive() {
@@ -96,7 +92,6 @@ public class User {
 
 	public void setActive(boolean active) {
 		this.active = active;
-		updateModifiedUtc();
 	}
 
 	public Date getCreatedUtc() {
@@ -105,7 +100,6 @@ public class User {
 
 	public void setCreatedUtc(Date createdUtc) {
 		this.createdUtc = createdUtc;
-		updateModifiedUtc();
 	}
 
 	public Date getModifiedUtc() {
@@ -116,22 +110,20 @@ public class User {
 		this.modifiedUtc = modifiedUtc;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public Set<ShoppingList> getShoppingLists() {
 		return shoppingLists;
 	}
 
 	public void setShoppingLists(Set<ShoppingList> shoppingLists) {
 		this.shoppingLists = shoppingLists;
-		updateModifiedUtc();
-	}
-
-	public Set<UserRole> getUserRoles() {
-		return userRoles;
-	}
-
-	public void setUserRoles(Set<UserRole> userRoles) {
-		this.userRoles = userRoles;
-		updateModifiedUtc();
 	}
 
 }

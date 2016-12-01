@@ -16,11 +16,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeRequests().anyRequest().permitAll();
-
-		// .and()
-		// .csrf().disable()
-		// .headers().frameOptions().disable();
+		// httpSecurity.authorizeRequests().anyRequest().permitAll();
+		httpSecurity//
+				.authorizeRequests().antMatchers("/h2-console/**").permitAll()//
+				.and()//
+				.authorizeRequests().antMatchers("/console/**").permitAll()//
+				.and()//
+				.authorizeRequests().antMatchers("/", "/login", "/signup").permitAll()//
+				.and()//
+				.authorizeRequests().antMatchers("/lists/**").authenticated().anyRequest().permitAll()//
+				.and()//
+				.formLogin().loginPage("/login").usernameParameter("username").defaultSuccessUrl("/")
+				.passwordParameter("password").permitAll()//
+				.and()//
+				.logout().logoutSuccessUrl("/login?logout").permitAll()//
+				.and()//
+				.csrf().disable().headers().frameOptions().disable();
 	}
 
 	@Autowired
@@ -30,9 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource).rolePrefix("").passwordEncoder(new PlaintextPasswordEncoder())
 				.usersByUsernameQuery(
-						"select email as username, password, active as enabled from shopping_list.users where username = ?")
+						"select email as username, password, active as enabled from shopping_list.users where email = ?")
 				.authoritiesByUsernameQuery(
-						"select u.email as username, ur.role as authority from shopping_list.users u inner join shopping_list.user_roles ur on (u.id = ur.user_id) where u.email = ?");
+						"select email as username, role as authority from shopping_list.users where email = ?");
 	}
 
 }
