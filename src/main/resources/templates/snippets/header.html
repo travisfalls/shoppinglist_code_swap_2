@@ -10,16 +10,16 @@
 			    </div>
 			    <ul class="nav navbar-nav">
 					<li class="active"><a href="/">Home</a></li>
-					<li sec:authorize="isAuthenticated()">
+					<li th:if="${user}" sec:authorize="isAuthenticated()">
 						<a href="#" onclick="$('#logoutForm').submit();">Sign Out</a>
 						<form th:action="@{/logout}" method="post" style="display: none;" id="logoutForm" sec:authorize="isAuthenticated()">
 							<input type="submit" value="Log Out" />
 						</form>
 					</li>
-					<li>
+					<li th:if="!${user}">
 						<a href="/signup" sec:authorize="!isAuthenticated()">Sign Up</a>
 					</li>
-					<li>
+					<li th:if="!${user}">
 						<a href="/login" sec:authorize="!isAuthenticated()">Sign In</a>
 					</li>
 			    </ul>
