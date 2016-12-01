@@ -23,7 +23,12 @@
         		<td><strong>Priority:</strong></td>
         		<td th:text="${listItem.shoppingListItemPriority.name}"></td>
         	</tr>
+        	<tr th:if="${listItem.shoppingListItemNote.body}">
+        		<td><strong>Note:</strong></td>
+        		<td th:text="${listItem.shoppingListItemNote.body}"></td>
+        	</tr>
         </table>
+		<a th:href="@{|/lists/${listItem.shoppingList.id}|}" class="pull-left"><button class="btn btn-primary">&lt;</button></a>
         <a th:href="@{|/lists/${listItem.shoppingList.id}/items/${listItem.id}/edit|}" class="pull-right"><button class="btn btn-primary">Edit</button></a>
 	</div>
 </body>
