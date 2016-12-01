@@ -8,21 +8,23 @@
 <body layout:fragment="content">
         <div class="container">
             <h1>Edit User</h1>
-            <form method="POST" th:object="${user}" id="userForm" enctype="multipart/form-data">
-                    <input type="hidden" class="form-control" th:field="*{id}" />
-                    <input type="hidden" class="form-control" th:field="*{role}" />
-                    
-                    <input type="text" class="form-control" th:field="*{fullName}" placeholder="Full Name" />
-                    <span class="alert alert-warning" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Full Name Error</span>
-                    
-                    <input type="text" class="form-control" th:field="*{email}" placeholder="Email" />
-                    <span class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
-                    
-                    <input type="password" class="form-control" th:field="*{password}" placeholder="Password" />
-                    <span class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
-                    
-                    <button class="btn btn-lg" type="submit">Submit</button>
-            </form>
+            <div class="form-group">
+	            <form method="POST" th:object="${user}" id="userForm" enctype="multipart/form-data">
+		            <input type="hidden" class="form-control" th:field="*{id}" />
+		            <input type="hidden" class="form-control" th:field="*{role}" />
+		            
+		            <input type="text" class="form-control" th:field="*{fullName}" placeholder="Full Name" />
+		            <span class="alert alert-warning" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Full Name Error</span>
+		            
+		            <input type="text" class="form-control" th:field="*{email}" placeholder="Email" />
+		            <span class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+		            
+		            <input type="password" class="form-control" th:field="*{password}" placeholder="Password" />
+		            <span class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
+		            
+		            <button class="btn btn-lg" type="submit">Submit</button>
+	            </form>
+	        </div>
         </div>
 </body>
 

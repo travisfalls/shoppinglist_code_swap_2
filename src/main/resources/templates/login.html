@@ -7,14 +7,16 @@
 </head>
 
 <body layout:fragment="content">
-
 	<div class="container">
         <h1 class="form-signin-heading">Sign In</h1>
-        <form th:action="@{/login}" method="POST">
-               <input type="email" class="form-control" placeholder="Email" id="username" name="username" />
-               <input type="password" class="form-control" placeholder="Password" id="password" name="password" />
-               <button class="btn btn-lg" type="submit">Submit</button>
-        </form>
+        <div class="form-group">
+	        <form th:action="@{/login}" method="POST">
+	               <input type="email" class="form-control" placeholder="Email" id="username" name="username" />
+	               <input type="password" class="form-control" placeholder="Password" id="password" name="password" />
+	               <button class="btn btn-lg" type="submit">Sign In</button>
+	        </form>
+        </div>
+               <a href="/signup"><button class="btn btn-lg" type="button">Sign Up</button></a>
 	</div>
 </body>
 
