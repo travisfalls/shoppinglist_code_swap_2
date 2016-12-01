@@ -71,4 +71,13 @@ public class MainController {
 		}
 	}
 
+	@GetMapping("/error")
+	public String error(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User u = userRepo.findOneByEmail(email);
+		model.addAttribute("user", u);
+		return "error";
+	}
+
 }
