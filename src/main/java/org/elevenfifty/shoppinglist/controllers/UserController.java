@@ -31,7 +31,10 @@ public class UserController {
 
 	@GetMapping("/signup")
 	public String signup(Model model) {
-		model.addAttribute("user", new User());
+		User nu = new User();
+		nu.setRole("USER");
+		nu.setActive(true);
+		model.addAttribute("user", nu);
 		return "signup";
 	}
 
