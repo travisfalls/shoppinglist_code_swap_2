@@ -11,13 +11,12 @@
         <h1>Add List Item</h1>
         <div class="form-group">
 	        <form method="POST" th:object="${listItem}" id="listItemForm" enctype="multipart/form-data">
-	        	<input type="hidden" th:field="*{shoppingList}" th:value="${listId}" />
-	        	<input type="hidden" th:field="*{checked}" th:value="false" />
+	        	<input type="hidden" name="shoppingListId" id="shoppingListId" th:value="${shoppingListId}" />
 	        	<div class="form-group">
 	               <input type="text" class="form-control" placeholder="Item Name" th:field="*{name}" />
 	            </div>
 	        	<div class="form-group">
-	               <select th:field="*{shoppingListItemPriority}">
+	               <select name="shoppingListItemPriority">
 	               		<option th:each="priority : ${priorities}" th:text="${priority.name}" th:value="${priority.id}"></option>
 	               </select>
 	           	</div>
