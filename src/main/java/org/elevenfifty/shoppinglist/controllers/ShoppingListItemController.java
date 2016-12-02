@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.elevenfifty.shoppinglist.beans.ShoppingListItem;
 import org.elevenfifty.shoppinglist.beans.User;
+import org.elevenfifty.shoppinglist.repositories.ShoppingListItemPriorityRepository;
 import org.elevenfifty.shoppinglist.repositories.ShoppingListItemRepository;
 import org.elevenfifty.shoppinglist.repositories.ShoppingListRepository;
 import org.elevenfifty.shoppinglist.repositories.UserRepository;
@@ -30,15 +31,23 @@ public class ShoppingListItemController {
 	@Autowired
 	ShoppingListItemRepository shoppingListItemRepo;
 
+	@Autowired
+	ShoppingListItemPriorityRepository shoppingListItemPriorityRepo;
+
 	@GetMapping("/lists/{listId}/items/add")
 	public String addListItem(Model model, @PathVariable(name = "listId") long listId) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
-		model.addAttribute("user", u);
-		model.addAttribute("listId", listId);
-		model.addAttribute("listItem", new ShoppingListItem());
-		return "list_item_add";
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			model.addAttribute("user", u);
+			model.addAttribute("listId", listId);
+			model.addAttribute("listItem", new ShoppingListItem());
+			model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
+			return "list_item_add";
+		} else {
+			return "redirect:/error";
+		}
 	}
 
 	@PostMapping("/lists/{listId}/items/add")
@@ -47,15 +56,20 @@ public class ShoppingListItemController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
-		model.addAttribute("user", u);
-		model.addAttribute("listId", listId);
-		if (result.hasErrors()) {
-			model.addAttribute("listItem", listItem);
-			return "list_item_add";
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			if (result.hasErrors()) {
+				model.addAttribute("user", u);
+				model.addAttribute("listId", listId);
+				model.addAttribute("listItem", listItem);
+				model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
+				return "list_item_add";
+			} else {
+				listItem.setShoppingList(shoppingListRepo.findOne(listId));
+				shoppingListItemRepo.save(listItem);
+				return "redirect:/lists/" + listId;
+			}
 		} else {
-			listItem.setShoppingList(shoppingListRepo.findOne(listId));
-			shoppingListItemRepo.save(listItem);
-			return "redirect:/lists/" + listId;
+			return "redirect:/error";
 		}
 	}
 
@@ -65,27 +79,45 @@ public class ShoppingListItemController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
-		model.addAttribute("user", u);
-		model.addAttribute("listItem", shoppingListItemRepo.findOne(listItemId));
-		return "list_item_view";
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			model.addAttribute("user", u);
+			model.addAttribute("listItem", shoppingListItemRepo.findOne(listItemId));
+			return "list_item_view";
+		} else {
+			return "redirect:/error";
+		}
 	}
 
-	// @PostMapping("/lists/{listId}/items/{listItemId}/check")
-	// public String checkListItem(Model model) {
-	// Authentication auth =
-	// SecurityContextHolder.getContext().getAuthentication();
-	// String email = auth.getName();
-	// User u = userRepo.findOneByEmail(email);
-	// model.addAttribute("user", u);
-	// }
-	//
-	// @PostMapping("/lists/{listId}/items/{listItemId}/uncheck")
-	// public String uncheckListItem(Model model) {
-	// Authentication auth =
-	// SecurityContextHolder.getContext().getAuthentication();
-	// String email = auth.getName();
-	// User u = userRepo.findOneByEmail(email);
-	// model.addAttribute("user", u);
-	// }
+	@PostMapping("/lists/{listId}/items/{listItemId}/check")
+	public String checkListItem(Model model, @PathVariable(name = "listId") long listId,
+			@PathVariable(name = "listItemId") long listItemId) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User u = userRepo.findOneByEmail(email);
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			ShoppingListItem sli = shoppingListItemRepo.findOne(listItemId);
+			sli.setChecked(true);
+			shoppingListItemRepo.save(sli);
+			return "redirect:/lists/" + listId;
+		} else {
+			return "redirect:/error";
+		}
+	}
+
+	@PostMapping("/lists/{listId}/items/{listItemId}/uncheck")
+	public String uncheckListItem(Model model, @PathVariable(name = "listId") long listId,
+			@PathVariable(name = "listItemId") long listItemId) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User u = userRepo.findOneByEmail(email);
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			ShoppingListItem sli = shoppingListItemRepo.findOne(listItemId);
+			sli.setChecked(false);
+			shoppingListItemRepo.save(sli);
+			return "redirect:/lists/" + listId;
+		} else {
+			return "redirect:/error";
+		}
+	}
 
 }
