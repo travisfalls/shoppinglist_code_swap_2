@@ -59,18 +59,17 @@ public class ShoppingListItemController {
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
 		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
-			// if (result.hasErrors()) {
-			// model.addAttribute("user", u);
-			// model.addAttribute("listId", listId);
-			// model.addAttribute("listItem", listItem);
-			// model.addAttribute("priorities",
-			// shoppingListItemPriorityRepo.findAll());
-			// return "list_item_edit";
-			// // } else {
-			shoppingListItemRepo.save(listItem);
-			System.out.println("SAVED LIST ITEM ID " + listItem.getId());
-			return "redirect:/lists/" + listId;
-			// }
+			if (result.hasErrors()) {
+				model.addAttribute("user", u);
+				model.addAttribute("listId", listId);
+				model.addAttribute("listItem", listItem);
+				model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
+				return "list_item_edit";
+			} else {
+				shoppingListItemRepo.save(listItem);
+				System.out.println("SAVED LIST ITEM ID " + listItem.getId());
+				return "redirect:/lists/" + listId;
+			}
 		} else {
 			return "redirect:/error";
 		}
@@ -106,7 +105,7 @@ public class ShoppingListItemController {
 				model.addAttribute("listId", listId);
 				model.addAttribute("listItem", listItem);
 				model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
-				return "list_item_add";
+				return "list_item_edit";
 			} else {
 				listItem.setShoppingList(shoppingListRepo.findOne(listId));
 				shoppingListItemRepo.save(listItem);
