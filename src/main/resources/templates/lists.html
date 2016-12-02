@@ -20,9 +20,9 @@
 			<tbody>
 				<tr th:each="list : ${lists}">
 					<td th:text="${list.name}"></td>
+					<td><a href="/" th:href="@{|/list/${lists.id}|}">View</a></td>
+
 				</tr>
-
-
 			</tbody>
 
 		</table>
