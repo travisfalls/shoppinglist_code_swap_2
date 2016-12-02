@@ -120,4 +120,18 @@ public class ShoppingListItemController {
 		}
 	}
 
+	@PostMapping("/lists/{listId}/items/{listItemId}/delete")
+	public String deleteListItem(Model model, @PathVariable(name = "listId") long listId,
+			@PathVariable(name = "listItemId") long listItemId) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User u = userRepo.findOneByEmail(email);
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			shoppingListItemRepo.delete(listItemId);
+			return "redirect:/lists/" + listId;
+		} else {
+			return "redirect:/error";
+		}
+	}
+
 }
