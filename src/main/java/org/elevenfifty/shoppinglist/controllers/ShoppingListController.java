@@ -67,7 +67,9 @@ public class ShoppingListController {
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
 		model.addAttribute("user", u);
-		model.addAttribute("list", new ShoppingList());
+		ShoppingList shopList = new ShoppingList();
+		shopList.setUser(u);
+		model.addAttribute("list", shopList);
 		return "listAdd";
 	}
 	
@@ -77,13 +79,13 @@ public class ShoppingListController {
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
 		model.addAttribute("user", u);
-		if (result.hasErrors()) {
-			model.addAttribute("list", list);
-			return "listAdd";
-		} else {
+//		if (result.hasErrors()) {
+//			model.addAttribute("list", list);
+//			return "listAdd";
+//		} else {
 			shoppingListRepo.save(list);
 			return "redirect:/lists/" + list.getId();
-		}
+		//}
 	}
 
 	

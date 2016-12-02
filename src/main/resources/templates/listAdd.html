@@ -13,6 +13,7 @@
 	<h1>Add A List</h1>
 		<form method="POST" th:object="${list}">
 			<input type="hidden" name="id" th:value="*{id}" />
+			<input type="hidden" th:field="*{user}"/>
 			<div class="form-group">
 				<label for="name">Name</label> <input type="text" name="name"
 					class="form-control" placeholder="Name" th:field="*{name}" /> <span
@@ -25,11 +26,12 @@
 					th:if="${#fields.hasErrors('color')}" th:errors="*{color}">Color
 					Error</span>
 			</div>
+			<button type="submit">Create</button> 
 		</form>
 		<div class="row">
 
-			<input type="submit" th:value="Create" /> <a href="/lists"
-				th:href="@{|/lists|}">Back</a>
+			
+			<a href="/lists" th:href="@{|/lists|}">Back</a>
 		</div>
 	</div>
 </body>
