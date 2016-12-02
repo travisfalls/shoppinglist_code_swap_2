@@ -9,8 +9,8 @@
 </head>
 
 <body layout:fragment="content">
+	<div class="container">
 	<h1>Add A List</h1>
-	<div class="row">
 		<form method="POST" th:object="${list}">
 			<input type="hidden" name="id" th:value="*{id}" />
 			<div class="form-group">
