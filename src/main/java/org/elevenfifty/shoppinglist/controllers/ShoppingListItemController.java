@@ -42,7 +42,9 @@ public class ShoppingListItemController {
 		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
 			model.addAttribute("user", u);
 			model.addAttribute("listId", listId);
-			model.addAttribute("listItem", new ShoppingListItem());
+			ShoppingListItem sli = new ShoppingListItem();
+			sli.setShoppingList(shoppingListRepo.findOne(listId));
+			model.addAttribute("listItem", sli);
 			model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
 			return "list_item_add";
 		} else {
@@ -53,6 +55,48 @@ public class ShoppingListItemController {
 	@PostMapping("/lists/{listId}/items/add")
 	public String addListItemSave(Model model, @PathVariable(name = "listId") long listId,
 			@ModelAttribute @Valid ShoppingListItem listItem, BindingResult result) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User u = userRepo.findOneByEmail(email);
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			// if (result.hasErrors()) {
+			// model.addAttribute("user", u);
+			// model.addAttribute("listId", listId);
+			// model.addAttribute("listItem", listItem);
+			// model.addAttribute("priorities",
+			// shoppingListItemPriorityRepo.findAll());
+			// return "list_item_edit";
+			// // } else {
+			shoppingListItemRepo.save(listItem);
+			System.out.println("SAVED LIST ITEM ID " + listItem.getId());
+			return "redirect:/lists/" + listId;
+			// }
+		} else {
+			return "redirect:/error";
+		}
+	}
+
+	@GetMapping("/lists/{listId}/items/{itemId}/edit")
+	public String editListItem(Model model, @PathVariable(name = "listId") long listId,
+			@PathVariable(name = "itemId") long itemId) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User u = userRepo.findOneByEmail(email);
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			model.addAttribute("user", u);
+			model.addAttribute("listId", listId);
+			model.addAttribute("listItem", shoppingListItemRepo.findOne(itemId));
+			model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
+			return "list_item_edit";
+		} else {
+			return "redirect:/error";
+		}
+	}
+
+	@PostMapping("/lists/{listId}/items/{itemId}/edit")
+	public String editListItemSave(Model model, @PathVariable(name = "listId") long listId,
+			@PathVariable(name = "itemId") long itemId, @ModelAttribute @Valid ShoppingListItem listItem,
+			BindingResult result) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
