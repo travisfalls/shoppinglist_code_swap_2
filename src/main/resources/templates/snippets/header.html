@@ -22,6 +22,9 @@
 					<li th:if="!${user}">
 						<a href="/login" sec:authorize="!isAuthenticated()">Sign In</a>
 					</li>
+					<li th:if="${user}" sec:authorize="isAuthenticated()">
+						<a href="/user/edit">Edit User Profile</a>
+					</li>
 			    </ul>
 			  </div>
 			</nav>
