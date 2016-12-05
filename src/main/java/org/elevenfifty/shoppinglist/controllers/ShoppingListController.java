@@ -48,7 +48,7 @@ public class ShoppingListController {
 		return "lists";
 	}
 	
-	@GetMapping("/list/{listId}")
+	@GetMapping("/lists/{listId}")
 	public String list(Model model, @PathVariable(name = "listId") long listId) {
 		model.addAttribute("listId", listId);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -85,7 +85,7 @@ public class ShoppingListController {
 //		} else {
 			shoppingListRepo.save(list);
 			return "redirect:/lists/" + list.getId();
-		//}
+//		}
 	}
 
 	
