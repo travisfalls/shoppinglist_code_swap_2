@@ -3,7 +3,9 @@ package org.elevenfifty.shoppinglist.controllers;
 import javax.validation.Valid;
 
 import org.elevenfifty.shoppinglist.beans.ShoppingListItem;
+import org.elevenfifty.shoppinglist.beans.ShoppingListItemNote;
 import org.elevenfifty.shoppinglist.beans.User;
+import org.elevenfifty.shoppinglist.repositories.ShoppingListItemNoteRepository;
 import org.elevenfifty.shoppinglist.repositories.ShoppingListItemPriorityRepository;
 import org.elevenfifty.shoppinglist.repositories.ShoppingListItemRepository;
 import org.elevenfifty.shoppinglist.repositories.ShoppingListRepository;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ShoppingListItemController {
@@ -33,6 +36,9 @@ public class ShoppingListItemController {
 
 	@Autowired
 	ShoppingListItemPriorityRepository shoppingListItemPriorityRepo;
+
+	@Autowired
+	ShoppingListItemNoteRepository shoppingListItemNoteRepo;
 
 	@GetMapping("/lists/{listId}/items/add")
 	public String addListItem(Model model, @PathVariable(name = "listId") long listId) {
@@ -54,23 +60,28 @@ public class ShoppingListItemController {
 
 	@PostMapping("/lists/{listId}/items/add")
 	public String addListItemSave(Model model, @PathVariable(name = "listId") long listId,
+			@RequestParam(name = "shoppingListItemNoteBody") String shoppingListItemNoteBody,
 			@ModelAttribute @Valid ShoppingListItem listItem, BindingResult result) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
 		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
-			// if (result.hasErrors()) {
-			// model.addAttribute("user", u);
-			// model.addAttribute("listId", listId);
-			// model.addAttribute("listItem", listItem);
-			// model.addAttribute("priorities",
-			// shoppingListItemPriorityRepo.findAll());
-			// return "list_item_edit";
-			// // } else {
-			shoppingListItemRepo.save(listItem);
-			System.out.println("SAVED LIST ITEM ID " + listItem.getId());
-			return "redirect:/lists/" + listId;
-			// }
+			if (result.hasErrors()) {
+				model.addAttribute("user", u);
+				model.addAttribute("listId", listId);
+				model.addAttribute("listItem", listItem);
+				model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
+				return "list_item_edit";
+			} else {
+				if (!"".equals(shoppingListItemNoteBody)) {
+					ShoppingListItemNote slin = new ShoppingListItemNote();
+					slin.setBody(shoppingListItemNoteBody);
+					shoppingListItemNoteRepo.save(slin);
+					listItem.setShoppingListItemNote(slin);
+				}
+				shoppingListItemRepo.save(listItem);
+				return "redirect:/lists/" + listId;
+			}
 		} else {
 			return "redirect:/error";
 		}
@@ -95,8 +106,10 @@ public class ShoppingListItemController {
 
 	@PostMapping("/lists/{listId}/items/{itemId}/edit")
 	public String editListItemSave(Model model, @PathVariable(name = "listId") long listId,
-			@PathVariable(name = "itemId") long itemId, @ModelAttribute @Valid ShoppingListItem listItem,
-			BindingResult result) {
+			@PathVariable(name = "itemId") long itemId,
+			@RequestParam(name = "shoppingListItemNoteId") Long shoppingListItemNoteId,
+			@RequestParam(name = "shoppingListItemNoteBody") String shoppingListItemNoteBody,
+			@ModelAttribute @Valid ShoppingListItem listItem, BindingResult result) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
@@ -106,8 +119,14 @@ public class ShoppingListItemController {
 				model.addAttribute("listId", listId);
 				model.addAttribute("listItem", listItem);
 				model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
-				return "list_item_add";
+				return "list_item_edit";
 			} else {
+				if (shoppingListItemNoteId != null) {
+					ShoppingListItemNote slin = shoppingListItemNoteRepo.findOne(shoppingListItemNoteId);
+					slin.setBody(shoppingListItemNoteBody);
+					shoppingListItemNoteRepo.save(slin);
+					listItem.setShoppingListItemNote(slin);
+				}
 				listItem.setShoppingList(shoppingListRepo.findOne(listId));
 				shoppingListItemRepo.save(listItem);
 				return "redirect:/lists/" + listId;
