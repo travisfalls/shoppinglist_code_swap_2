@@ -14,12 +14,15 @@
 	        	<input type="hidden" th:field="*{shoppingList}" th:value="${listId}" />
 	        	<input type="hidden" th:field="*{checked}" th:value="false" />
 	        	<div class="form-group">
-	               <input type="text" class="form-control" placeholder="Item Name" th:field="*{name}" />
-	            </div>
-	        	<div class="form-group">
 	               <select th:field="*{shoppingListItemPriority}">
 	               		<option th:each="priority : ${priorities}" th:text="${priority.name}" th:value="${priority.id}"></option>
 	               </select>
+	           	</div>
+	        	<div class="form-group">
+	               <input type="text" class="form-control" placeholder="Item Name" th:field="*{name}" />
+	            </div>
+	           	<div class="form-group">
+	           		<textarea id="shoppingListItemNoteBody" name="shoppingListItemNoteBody" placeholder="Note" class="form-control"></textarea>
 	           	</div>
                <button class="btn btn-primary pull-right" type="submit">Add</button>
 	        </form>
