@@ -89,12 +89,26 @@ public class ShoppingListController {
 	}
 
 	
-	
+	@GetMapping("/lists/{listId}/delete")
+	public String shoppingListDelete(Model model, @PathVariable(name = "listId") long listId) {
+		model.addAttribute("listId", listId);
+		ShoppingList shopList = shoppingListRepo.findOne(listId);
+		model.addAttribute("shoppingList", shopList);
+		return "listDelete";
+	}
 
-	
-	
-	
-	
+		
+	@PostMapping("/lists/{listId}/delete")
+    public String shoppingListDeleteSave(@PathVariable(name = "listId") long listId, @ModelAttribute @Valid ShoppingList shopList,
+		BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("shoppingList", shopList);
+			return "lists";
+		} else {
+        shoppingListRepo.delete(shopList); 
+        return "redirect: lists";
+    }
 
+}
 	
 }
