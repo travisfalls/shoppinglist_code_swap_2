@@ -21,6 +21,7 @@
 				<tr th:each="list : ${lists}">
 					<td th:text="${list.name}"></td>
 					<td><a href="/" th:href="@{|/lists/${lists.id}|}">View</a></td>
+					<td><a href="/" th:href="@{|/lists/${lists.id}/delete|}">Delete</a></td>
 
 				</tr>
 			</tbody>
