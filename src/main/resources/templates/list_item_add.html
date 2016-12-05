@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/basic">
+
+<head>
+    <title>Add List Item</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body layout:fragment="content">
+	<div class="container">
+        <h1>Add List Item</h1>
+        <div class="form-group">
+	        <form method="POST" th:object="${listItem}" id="listItemForm" enctype="multipart/form-data">
+	        	<input type="hidden" th:field="*{shoppingList}" th:value="${listId}" />
+	        	<input type="hidden" th:field="*{checked}" th:value="false" />
+	        	<div class="form-group">
+	               <input type="text" class="form-control" placeholder="Item Name" th:field="*{name}" />
+	            </div>
+	        	<div class="form-group">
+	               <select th:field="*{shoppingListItemPriority}">
+	               		<option th:each="priority : ${priorities}" th:text="${priority.name}" th:value="${priority.id}"></option>
+	               </select>
+	           	</div>
+               <button class="btn btn-primary pull-right" type="submit">Add</button>
+	        </form>
+        </div>
+	</div>
+</body>
+
+</html>

@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.elevenfifty.shoppinglist.beans.ShoppingList;
 import org.elevenfifty.shoppinglist.beans.User;
+import org.elevenfifty.shoppinglist.repositories.ShoppingListItemRepository;
 import org.elevenfifty.shoppinglist.repositories.ShoppingListRepository;
 import org.elevenfifty.shoppinglist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class ShoppingListController {
 	private ShoppingListRepository shoppingListRepo;
 	
 	@Autowired
+	private ShoppingListItemRepository shoppingListItemRepo;
+	
+	@Autowired
 	private UserRepository userRepo;
 	
 	@GetMapping("/")
@@ -44,17 +48,17 @@ public class ShoppingListController {
 		return "lists";
 	}
 	
-	@GetMapping("/list/{listId}")
+	@GetMapping("/lists/{listId}")
 	public String list(Model model, @PathVariable(name = "listId") long listId) {
 		model.addAttribute("listId", listId);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
 		ShoppingList s = shoppingListRepo.findOne(listId);
+		model.addAttribute("listItems", shoppingListItemRepo.findByShoppingListId(listId));
 		model.addAttribute("shoppingList", s);
 		model.addAttribute("user", u);
-		model.addAttribute("listItems", s.getShoppingListItems());
-		return "list_view";
+		return "listView";
 	}
 	
 	@GetMapping("/lists/add")
@@ -63,8 +67,10 @@ public class ShoppingListController {
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
 		model.addAttribute("user", u);
-		model.addAttribute("list", new ShoppingList());
-		return "list_add";
+		ShoppingList shopList = new ShoppingList();
+		shopList.setUser(u);
+		model.addAttribute("list", shopList);
+		return "listAdd";
 	}
 	
 	@PostMapping("/lists/add")
@@ -73,13 +79,13 @@ public class ShoppingListController {
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
 		model.addAttribute("user", u);
-		if (result.hasErrors()) {
-			model.addAttribute("list", list);
-			return "list_add";
-		} else {
+//		if (result.hasErrors()) {
+//			model.addAttribute("list", list);
+//			return "listAdd";
+//		} else {
 			shoppingListRepo.save(list);
 			return "redirect:/lists/" + list.getId();
-		}
+//		}
 	}
 
 	
