@@ -18,26 +18,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
-
 @Controller
 public class ShoppingListController {
-	
+
 	@Autowired
 	private ShoppingListRepository shoppingListRepo;
-	
+
 	@Autowired
 	private ShoppingListItemRepository shoppingListItemRepo;
-	
+
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@GetMapping("/")
 	public String home(Model model) {
 		return "redirect:/lists";
 	}
-	
+
 	@GetMapping("/lists")
 	public String lists(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -47,22 +44,8 @@ public class ShoppingListController {
 		model.addAttribute("user", u);
 		return "lists";
 	}
-	
-//	@GetMapping("/lists/{listId}")
-//	public String list(Model model, @PathVariable(name = "listId") long listId) {
-//		model.addAttribute("listId", listId);
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		String email = auth.getName();
-//		User u = userRepo.findOneByEmail(email);
-//		ShoppingList s = shoppingListRepo.findOne(listId);
-//		model.addAttribute("listItems", shoppingListItemRepo.findByShoppingListId(listId));
-//		model.addAttribute("shoppingList", s);
-//		model.addAttribute("user", u);
-//		return "listView";
-//	}
-	
-	
-	@GetMapping("/lists/{listId}") //with check to see if user has access
+
+	@GetMapping("/lists/{listId}") // with check to see if user has access
 	public String list(Model model, @PathVariable(name = "listId") long listId) {
 		model.addAttribute("listId", listId);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -73,13 +56,12 @@ public class ShoppingListController {
 			ShoppingList s = shoppingListRepo.findOne(listId);
 			model.addAttribute("listItems", shoppingListItemRepo.findByShoppingListId(listId));
 			model.addAttribute("shoppingList", s);
-			return "listView";
+			return "listView2";
 		} else {
 			return "redirect:/error";
 		}
 	}
-	
-	
+
 	@GetMapping("/lists/add")
 	public String listAdd(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -91,7 +73,7 @@ public class ShoppingListController {
 		model.addAttribute("list", shopList);
 		return "listAdd";
 	}
-	
+
 	@PostMapping("/lists/add")
 	public String listAddSave(Model model, @ModelAttribute @Valid ShoppingList list, BindingResult result) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -107,17 +89,8 @@ public class ShoppingListController {
 		}
 	}
 
-	
-//	@GetMapping("/lists/{listId}/delete")
-//	public String shoppingListDelete(Model model, @PathVariable(name = "listId") long listId) {
-//		model.addAttribute("listId", listId);
-//		ShoppingList shopList = shoppingListRepo.findOne(listId);
-//		model.addAttribute("shoppingList", shopList);
-//		return "listDelete";
-//	}
-
-		
-	@GetMapping("/lists/{listId}/delete") //with check to see if user has access
+	@GetMapping("/lists/{listId}/delete") // with check to see if user has
+											// access
 	public String shoppingListDelete(Model model, @PathVariable(name = "listId") long listId) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
@@ -132,18 +105,18 @@ public class ShoppingListController {
 			return "redirect:/error";
 		}
 	}
-	
+
 	@PostMapping("/lists/{listId}/delete")
-    public String shoppingListDeleteSave(@PathVariable(name = "listId") long listId, @ModelAttribute @Valid ShoppingList shopList,
-		BindingResult result, Model model) {
+	public String shoppingListDeleteSave(@PathVariable(name = "listId") long listId,
+			@ModelAttribute @Valid ShoppingList shopList, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("shoppingList", shopList);
 			return "lists";
 		} else {
-        shoppingListRepo.delete(shopList); 
-        return "redirect: lists";
-    }
+			shoppingListRepo.delete(shopList);
+			return "redirect: lists";
+		}
 
-}
-	
+	}
+
 }
