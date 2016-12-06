@@ -20,31 +20,22 @@
 					th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
 					Error</span>
 			</div>
-			
-	<!-- 		<div class="form-group">
-				<label for="color">Color</label> <input type="text" name="color"
-					class="form-control" placeholder="Color" th:field="*{color}" /> <span
-					th:if="${#fields.hasErrors('color')}" th:errors="*{color}">Color
-					Error</span>
-			</div>	 -->
-			
-			<select  th:field="*{color}">
-				 <option value="#">Choose color</option>
-	 			 <option value="#990000">Medium Red</option>
-	 			 <option value="#E33333">Bright Red</option>
-	 			 <option value="#660000">Dark Red</option>
-	 			 <option value="#666666">Dark Gray</option>
-	 			 <option value="#CCCCCC">Light Gray</option>
-	 			 <option value="#FFFFFF">White</option>
-			</select>
-			
-			<button type="submit">Create</button> 
+			<div class="form-group">
+				<label>Color Selection</label>
+				<input class="form-control" type="text" id="manualColor" name="manualColor" placeholder="Enter Hex Code" />
+				<p>or</p>
+				<select class="form-control" th:field="*{color}">
+					 <option value="#">Choose color</option>
+		 			 <option value="#990000">Medium Red</option>
+		 			 <option value="#E33333">Bright Red</option>
+		 			 <option value="#660000">Dark Red</option>
+		 			 <option value="#666666">Dark Gray</option>
+		 			 <option value="#CCCCCC">Light Gray</option>
+		 			 <option value="#FFFFFF">White</option>
+				</select>
+			</div>
+               <button class="btn btn-primary pull-right" type="submit">Create</button>
 		</form>
-		<div class="row">
-
-			
-			<a href="/lists" th:href="@{|/lists|}">Back</a>
-		</div>
 	</div>
 </body>
 </html>

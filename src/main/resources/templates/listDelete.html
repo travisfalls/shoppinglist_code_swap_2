@@ -10,21 +10,14 @@
 	<body layout:fragment="content">
 		<div class="container">
 			<h1>Delete a List</h1>
-			<h2>Are you sure you want to delete this?</h2>
-			<h3>List</h3>
+			<p>Are you sure you want to delete this list?</p>
 			<form method="POST" th:object="${shoppingList}" enctype="multipart/form-data">
 				<input type="hidden" th:field="*{id}"/>
-				<div th:if="${shoppingList}">
-					<ul>
-						<li th:text="*{name}"></li>
-						<li th:text="*{color}"></li>
-					</ul>
-				</div>
-				<button type="submit" class="btn btn-danger">Delete</button>
-				<div th:unless="${shoppingList}">
-					<h1>List not found</h1>
-				</div>
-				<a href="/" th:href="@{|/lists|}">Back to shopping lists page.</a>
+				<ul>
+					<li><strong>List Name: </strong><span th:text="*{name}"></span></li>
+					<li><strong>List Color: </strong><span th:text="*{color}"></span></li>
+				</ul>
+				<button type="submit" class="btn btn-primary pull-right">Delete</button>
 			</form>
 		</div>
 	</body>
