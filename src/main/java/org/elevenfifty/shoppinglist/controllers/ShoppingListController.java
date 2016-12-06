@@ -48,18 +48,37 @@ public class ShoppingListController {
 		return "lists";
 	}
 	
-	@GetMapping("/lists/{listId}")
+//	@GetMapping("/lists/{listId}")
+//	public String list(Model model, @PathVariable(name = "listId") long listId) {
+//		model.addAttribute("listId", listId);
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		String email = auth.getName();
+//		User u = userRepo.findOneByEmail(email);
+//		ShoppingList s = shoppingListRepo.findOne(listId);
+//		model.addAttribute("listItems", shoppingListItemRepo.findByShoppingListId(listId));
+//		model.addAttribute("shoppingList", s);
+//		model.addAttribute("user", u);
+//		return "listView";
+//	}
+	
+	
+	@GetMapping("/lists/{listId}") //with check to see if user has access
 	public String list(Model model, @PathVariable(name = "listId") long listId) {
 		model.addAttribute("listId", listId);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
-		ShoppingList s = shoppingListRepo.findOne(listId);
-		model.addAttribute("listItems", shoppingListItemRepo.findByShoppingListId(listId));
-		model.addAttribute("shoppingList", s);
-		model.addAttribute("user", u);
-		return "listView";
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			model.addAttribute("user", u);
+			ShoppingList s = shoppingListRepo.findOne(listId);
+			model.addAttribute("listItems", shoppingListItemRepo.findByShoppingListId(listId));
+			model.addAttribute("shoppingList", s);
+			return "listView";
+		} else {
+			return "redirect:/error";
+		}
 	}
+	
 	
 	@GetMapping("/lists/add")
 	public String listAdd(Model model) {
@@ -79,22 +98,52 @@ public class ShoppingListController {
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
 		model.addAttribute("user", u);
-//		if (result.hasErrors()) {
-//			model.addAttribute("list", list);
-//			return "listAdd";
-//		} else {
+		if (result.hasErrors()) {
+			model.addAttribute("list", list);
+			return "listAdd";
+		} else {
 			shoppingListRepo.save(list);
 			return "redirect:/lists/" + list.getId();
-//		}
+		}
 	}
 
 	
-	
+//	@GetMapping("/lists/{listId}/delete")
+//	public String shoppingListDelete(Model model, @PathVariable(name = "listId") long listId) {
+//		model.addAttribute("listId", listId);
+//		ShoppingList shopList = shoppingListRepo.findOne(listId);
+//		model.addAttribute("shoppingList", shopList);
+//		return "listDelete";
+//	}
 
+		
+	@GetMapping("/lists/{listId}/delete") //with check to see if user has access
+	public String shoppingListDelete(Model model, @PathVariable(name = "listId") long listId) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User u = userRepo.findOneByEmail(email);
+		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
+			model.addAttribute("user", u);
+			model.addAttribute("listId", listId);
+			ShoppingList shopList = shoppingListRepo.findOne(listId);
+			model.addAttribute("shoppingList", shopList);
+			return "listDelete";
+		} else {
+			return "redirect:/error";
+		}
+	}
 	
-	
-	
-	
+	@PostMapping("/lists/{listId}/delete")
+    public String shoppingListDeleteSave(@PathVariable(name = "listId") long listId, @ModelAttribute @Valid ShoppingList shopList,
+		BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("shoppingList", shopList);
+			return "lists";
+		} else {
+        shoppingListRepo.delete(shopList); 
+        return "redirect: lists";
+    }
 
+}
 	
 }
