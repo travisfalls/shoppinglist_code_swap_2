@@ -14,17 +14,24 @@
 			<thead>
 				<tr>
 					<th>Contents</th>
-
 				</tr>
 			</thead>
-			<tbody>
-				<tr th:each="item : ${listItems}">
-					<td th:text="${item.name}"></td>
-				</tr>
+			<tr th:each="item : ${listItems}">
+				<td th:text="${item.name}"></td>
+				<td class="text-center" style="vertical-align: middle;">
+					<form method="POST" action="/lists/listId/items/listItemId/delete">
+						<input type="hidden" name="id" th:value="${item.id}" /> <a
+							href="/"
+							th:href="@{|/lists/${shoppingList.id}/items/${item.id}|}">View</a>
+						<button type="submit" class="text">Delete</button>
 
-			</tbody>
+					</form>
+				</td>
+			</tr>
 		</table>
 
+		<a class="btn btn-default" role="button" href="/"
+			th:href="@{|/lists/${shoppingList.id}/items/add|}">Add Item</a>
 	</div>
 </body>
 </html>
