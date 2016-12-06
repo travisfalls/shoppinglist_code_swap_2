@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ShoppingListController {
@@ -56,7 +57,7 @@ public class ShoppingListController {
 			ShoppingList s = shoppingListRepo.findOne(listId);
 			model.addAttribute("listItems", shoppingListItemRepo.findByShoppingListId(listId));
 			model.addAttribute("shoppingList", s);
-			return "listView2";
+			return "listView";
 		} else {
 			return "redirect:/error";
 		}
@@ -75,7 +76,8 @@ public class ShoppingListController {
 	}
 
 	@PostMapping("/lists/add")
-	public String listAddSave(Model model, @ModelAttribute @Valid ShoppingList list, BindingResult result) {
+	public String listAddSave(Model model, @RequestParam(name = "manualColor") String manualColor,
+			@ModelAttribute @Valid ShoppingList list, BindingResult result) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User u = userRepo.findOneByEmail(email);
@@ -84,13 +86,15 @@ public class ShoppingListController {
 			model.addAttribute("list", list);
 			return "listAdd";
 		} else {
+			if (!"".equals(manualColor)) {
+				list.setColor(manualColor);
+			}
 			shoppingListRepo.save(list);
 			return "redirect:/lists/" + list.getId();
 		}
 	}
 
-	@GetMapping("/lists/{listId}/delete") // with check to see if user has
-											// access
+	@GetMapping("/lists/{listId}/delete")
 	public String shoppingListDelete(Model model, @PathVariable(name = "listId") long listId) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
@@ -107,16 +111,9 @@ public class ShoppingListController {
 	}
 
 	@PostMapping("/lists/{listId}/delete")
-	public String shoppingListDeleteSave(@PathVariable(name = "listId") long listId,
-			@ModelAttribute @Valid ShoppingList shopList, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			model.addAttribute("shoppingList", shopList);
-			return "lists";
-		} else {
-			shoppingListRepo.delete(shopList);
-			return "redirect: lists";
-		}
-
+	public String shoppingListDeleteSave(@PathVariable(name = "listId") long listId, Model model) {
+		shoppingListRepo.delete(listId);
+		return "redirect: /lists";
 	}
 
 }
