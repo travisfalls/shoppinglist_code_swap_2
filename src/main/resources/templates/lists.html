@@ -10,13 +10,8 @@
 
 <body layout:fragment="content">
 	<div class="container">
+		<h1>Shopping Lists</h1>
 		<table class="table table-striped table-hover">
-			<thead>
-				<tr>
-					<th colspan="2" style="vertical-align:middle;">Name</th>
-
-				</tr>
-			</thead>
 			<tbody>
 				<tr th:each="list : ${lists}">
 					<td th:text="${list.name}" th:style="@{|color: ${list.color};|}" style="vertical-align: middle;"></td>

@@ -12,30 +12,27 @@
 	<div class="container">
 		<h1 th:text="${shoppingList.name}" th:style="@{|color: ${shoppingList.color};|}"></h1>
 		<table class="table table-striped table-hover">
-			<thead>
-				<tr>
-					<th colspan="3">Contents</th>
+			<tbody>
+				<tr th:each="item : ${listItems}">
+					<td class="text-left" style="vertical-align: middle;">
+						<form method="POST" th:if="!${item.checked}" th:action="@{|/lists/${shoppingList.id}/items/${item.id}/check|}">
+							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-unchecked"></span></button>
+						</form>
+						<form method="POST" th:if="${item.checked}" th:action="@{|/lists/${shoppingList.id}/items/${item.id}/uncheck|}">
+							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-check"></span></button>
+						</form>
+					</td>
+					<td th:text="${item.name}" class="text-left" style="vertical-align: middle;"></td>
+					<td class="text-center" style="vertical-align: middle;">
+						<form method="POST" th:action="@{|/lists/${shoppingList.id}/items/${item.id}/delete|}">
+						<a th:href="@{|/lists/${shoppingList.id}/items/${item.id}|}" class="btn btn-primary">View</a>
+						&nbsp;&nbsp;&nbsp;
+							<input type="hidden" name="id" th:value="${item.id}" />
+							<button type="submit" class="btn btn-primary">Delete</button>
+						</form>
+					</td>
 				</tr>
-			</thead>
-			<tr th:each="item : ${listItems}">
-				<td class="text-left" style="vertical-align: middle;">
-					<form method="POST" th:if="!${item.checked}" th:action="@{|/lists/${shoppingList.id}/items/${item.id}/check|}">
-						<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-unchecked"></span></button>
-					</form>
-					<form method="POST" th:if="${item.checked}" th:action="@{|/lists/${shoppingList.id}/items/${item.id}/uncheck|}">
-						<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-check"></span></button>
-					</form>
-				</td>
-				<td th:text="${item.name}" class="text-left" style="vertical-align: middle;"></td>
-				<td class="text-center" style="vertical-align: middle;">
-					<form method="POST" th:action="@{|/lists/${shoppingList.id}/items/${item.id}/delete|}">
-					<a th:href="@{|/lists/${shoppingList.id}/items/${item.id}|}" class="btn btn-primary">View</a>
-					&nbsp;&nbsp;&nbsp;
-						<input type="hidden" name="id" th:value="${item.id}" />
-						<button type="submit" class="btn btn-primary">Delete</button>
-					</form>
-				</td>
-			</tr>
+			</tbody>
 		</table>
 
 		<a class="btn btn-primary pull-right" role="button" href="/"
