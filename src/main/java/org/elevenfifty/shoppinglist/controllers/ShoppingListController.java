@@ -114,7 +114,7 @@ public class ShoppingListController {
 	public String shoppingListDeleteSave(@PathVariable(name = "listId") long listId, Model model) {
 		// FIXME
 		// shoppingListRepo.delete(listId);
-		return "redirect: /lists";
+		return "redirect:/lists";
 	}
 
 }
