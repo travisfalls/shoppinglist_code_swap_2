@@ -3,30 +3,30 @@
 	<head></head>
 	<body th:fragment="header">
 		<header>
-			<nav class="navbar navbar-default">
-			  <div class="container-fluid">
-			    <div class="navbar-header">
-			      <a class="navbar-brand" href="#">Shopping Lists - Team 2</a>
-			    </div>
-			    <ul class="nav navbar-nav">
-					<li class="active"><a href="/">Home</a></li>
-					<li th:if="${user}" sec:authorize="isAuthenticated()">
-						<a href="#" onclick="$('#logoutForm').submit();">Sign Out</a>
-						<form th:action="@{/logout}" method="post" style="display: none;" id="logoutForm" sec:authorize="isAuthenticated()">
-							<input type="submit" value="Log Out" />
-						</form>
-					</li>
-					<li th:if="!${user}">
-						<a href="/signup" sec:authorize="!isAuthenticated()">Sign Up</a>
-					</li>
-					<li th:if="!${user}">
-						<a href="/login" sec:authorize="!isAuthenticated()">Sign In</a>
-					</li>
-					<li th:if="${user}" sec:authorize="isAuthenticated()">
-						<a href="/user/edit">Edit User Profile</a>
-					</li>
-			    </ul>
-			  </div>
+			<nav class="navbar navbar-default" style="background-color:#990000;">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#" style="color:#FFFFFF;">Shopping Lists - Team 2</a>
+					</div>
+					<ul class="nav navbar-nav" style="color:#FFFFFF;">
+						<li><a href="/" style="color:#FFFFFF;">Home</a></li>
+						<li th:if="${user}" sec:authorize="isAuthenticated()">
+							<a href="#" onclick="$('#logoutForm').submit();" style="color:#FFFFFF;">Sign Out</a>
+							<form th:action="@{/logout}" method="post" style="display: none;" id="logoutForm" sec:authorize="isAuthenticated()">
+								<input type="submit" value="Log Out" />
+							</form>
+						</li>
+						<li th:if="!${user}">
+							<a href="/signup" sec:authorize="!isAuthenticated()" style="color:#FFFFFF;">Sign Up</a>
+						</li>
+						<li th:if="!${user}">
+							<a href="/login" sec:authorize="!isAuthenticated()" style="color:#FFFFFF;">Sign In</a>
+						</li>
+						<li th:if="${user}" sec:authorize="isAuthenticated()">
+							<a href="/user/edit" style="color:#FFFFFF;">Profile</a>
+						</li>
+					</ul>
+				</div>
 			</nav>
 		</header>
 	</body>

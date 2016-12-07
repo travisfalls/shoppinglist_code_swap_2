@@ -3,27 +3,20 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layouts/basic">
 	<head>
-		<title>Delete a List</title>
+		<title>Delete List</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 	<body layout:fragment="content">
 		<div class="container">
-			<h1>Delete a List</h1>
-			<h2>Are you sure you want to delete this?</h2>
-			<h3>List</h3>
-			<form method="POST" th:object="${shoppingList}" enctype="multipart/form-data">
-				<input type="hidden" th:field="*{id}"/>
-				<div th:if="${shoppingList}">
-					<ul>
-						<li th:text="*{name}"></li>
-						<li th:text="*{color}"></li>
-					</ul>
-				</div>
-				<button type="submit" class="btn btn-danger">Delete</button>
-				<div th:unless="${shoppingList}">
-					<h1>List not found</h1>
-				</div>
-				<a href="/" th:href="@{|/lists|}">Back to shopping lists page.</a>
+			<h1 th:text="${shoppingList.name}" th:style="@{|color: ${shoppingList.color};|}">Delete List</h1>
+			<p>Are you sure you want to delete this list?</p>
+			<form method="POST" enctype="multipart/form-data">
+				<input type="hidden" th:field="${shoppingList.id}"/>
+				<ul>
+					<li><strong>List Name: </strong><span th:text="${shoppingList.name}"></span></li>
+					<li><strong>List Color: </strong><span th:text="${shoppingList.color}"></span></li>
+				</ul>
+				<button type="submit" class="btn btn-primary pull-right">Delete</button>
 			</form>
 		</div>
 	</body>
