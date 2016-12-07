@@ -34,10 +34,6 @@ public class ShoppingList {
 	@NotBlank
 	private String color;
 
-	@ManyToOne
-	@JoinColumn(name = "shopping_list_group_id")
-	private ShoppingListGroup shoppingListGroup;
-
 	@NotNull
 	private Date createdUtc;
 
@@ -89,15 +85,6 @@ public class ShoppingList {
 
 	public void setColor(String color) {
 		this.color = color;
-		updateModifiedUtc();
-	}
-
-	public ShoppingListGroup getShoppingListGroup() {
-		return shoppingListGroup;
-	}
-
-	public void setShoppingListGroup(ShoppingListGroup shoppingListGroup) {
-		this.shoppingListGroup = shoppingListGroup;
 		updateModifiedUtc();
 	}
 
