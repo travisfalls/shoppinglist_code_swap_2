@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.springframework.org/schema/security">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Shopping Lists - Team 2</title>
-
-    <!-- Theme -->
-	<link rel="stylesheet" href="https://bootswatch.com/journal/bootstrap.min.css" crossorigin="anonymous" />
-
-</head>
-
-<body lang="en">
-        <div th:replace="snippets/header :: header"></div>
-        <div layout:fragment="content"></div>
-        <div th:replace="snippets/footer :: footer"></div>
-    <div th:replace="snippets/scripts :: scripts"></div>
-</body>
-
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Shopping Lists - Team 2</title>
+		<!-- Theme -->
+		<link rel="stylesheet" href="https://bootswatch.com/journal/bootstrap.min.css" crossorigin="anonymous" />
+		<style>
+			.btn-primary {
+			background-color: #990000;
+			border-color: #990000;
+			}
+			.btn-primary:hover {
+			background-color: #E33333;
+			border-color: #E33333;
+			}
+			.themed-link {
+			color: #990000;
+			}
+			.alert-danger {
+			background-color: #FFCC33;
+			}
+			.alert-success {
+			background-color: #009966;
+			}
+		</style>
+	</head>
+	<body lang="en">
+		<div th:replace="snippets/header :: header"></div>
+		<div layout:fragment="content"></div>
+		<div th:replace="snippets/footer :: footer"></div>
+		<div th:replace="snippets/scripts :: scripts"></div>
+	</body>
 </html>

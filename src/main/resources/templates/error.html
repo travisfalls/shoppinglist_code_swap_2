@@ -1,19 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/basic">
-
-<head>
-    <title>Error</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-
-<body layout:fragment="content">
-	<div class="container">
-        <h1>Error</h1>
-        <p>You do not have access to this page, or it does not exist.</p>
-        <p>
-        	<a href="#" onclick="window.history.back();">Click here to go back.</a>
-       	</p>
-	</div>
-</body>
-
+	<head>
+		<title>Error</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body layout:fragment="content">
+		<div class="container">
+			<h1>Error</h1>
+			<p>You do not have access to this page, or it does not exist.</p>
+			<p>
+				<a href="#" onclick="window.history.back();" class="themed-link">Click here to go back.</a>
+			</p>
+		</div>
+	</body>
 </html>

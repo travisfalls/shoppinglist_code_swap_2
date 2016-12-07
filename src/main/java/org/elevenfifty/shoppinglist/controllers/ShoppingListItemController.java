@@ -73,12 +73,14 @@ public class ShoppingListItemController {
 				model.addAttribute("priorities", shoppingListItemPriorityRepo.findAll());
 				return "list_item_edit";
 			} else {
+				ShoppingListItemNote slin = new ShoppingListItemNote();
 				if (!"".equals(shoppingListItemNoteBody)) {
-					ShoppingListItemNote slin = new ShoppingListItemNote();
 					slin.setBody(shoppingListItemNoteBody);
-					shoppingListItemNoteRepo.save(slin);
-					listItem.setShoppingListItemNote(slin);
+				} else {
+					slin.setBody("");
 				}
+				shoppingListItemNoteRepo.save(slin);
+				listItem.setShoppingListItemNote(slin);
 				shoppingListItemRepo.save(listItem);
 				return "redirect:/lists/" + listId;
 			}

@@ -2,43 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layouts/basic">
-
-<head>
-<title>View List Item</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-
-<body layout:fragment="content">
-
-	<div class="container">
-		<h1>View List Item</h1>
-		<table class="table">
-			<tr>
-				<td><strong>Priority:</strong></td>
-				<td th:text="${listItem.shoppingListItemPriority.name}"></td>
-			</tr>
-			<tr>
-				<td><strong>Name:</strong></td>
-				<td th:text="${listItem.name}"></td>
-			</tr>
-			<tr>
-				<td><strong>Note:</strong></td>
-				<td th:if="${listItem.shoppingListItemNote} != null"
-					th:text="${listItem.shoppingListItemNote.body}"></td>
-				<td th:if="${listItem.shoppingListItemNote} == null"
-					th:text="${listItem.shoppingListItemNote.body}"></td>
-			</tr>
-			<tr>
-				<td><strong>Complete:</strong></td>
-				<td th:if="${listItem.checked}">Yes</td>
-				<td th:if="!${listItem.checked}">No</td>
-			</tr>
-		</table>
-		<a th:href="@{|/lists/${listItem.shoppingList.id}|}" class="pull-left"><button
-				class="btn btn-primary">&lt;</button></a> <a
-			th:href="@{|/lists/${listItem.shoppingList.id}/items/${listItem.id}/edit|}"
-			class="pull-right"><button class="btn btn-primary">Edit</button></a>
-	</div>
-</body>
-
+	<head>
+		<title>View List Item</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body layout:fragment="content">
+		<div class="container">
+			<h1>View List Item</h1>
+			<table class="table">
+				<tr>
+					<td><strong>Priority:</strong></td>
+					<td th:text="${listItem.shoppingListItemPriority.name}"></td>
+				</tr>
+				<tr>
+					<td><strong>Name:</strong></td>
+					<td th:text="${listItem.name}"></td>
+				</tr>
+				<tr th:if="${listItem.shoppingListItemNote}">
+					<td><strong>Note:</strong></td>
+					<td th:if="${listItem.shoppingListItemNote} != null"
+						th:text="${listItem.shoppingListItemNote.body}"></td>
+					<td th:if="${listItem.shoppingListItemNote} == null"
+						th:text="${listItem.shoppingListItemNote.body}"></td>
+				</tr>
+				<tr>
+					<td><strong>Complete:</strong></td>
+					<td th:if="${listItem.checked}">Yes</td>
+					<td th:if="!${listItem.checked}">No</td>
+				</tr>
+			</table>
+			<a th:href="@{|/lists/${listItem.shoppingList.id}/items/${listItem.id}/edit|}"
+				class="pull-right"><button class="btn btn-primary">Edit</button></a>
+		</div>
+	</body>
 </html>

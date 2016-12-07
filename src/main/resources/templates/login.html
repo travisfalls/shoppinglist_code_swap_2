@@ -1,36 +1,33 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/basic">
-
-<head>
-    <title>Sign In</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-
-<body layout:fragment="content">
-	<div class="container">
-        <h1>Sign In</h1>
-        <div th:if="${param.error}" class="alert alert-danger">
-		  The email or password entered is incorrect.
+	<head>
+		<title>Sign In</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body layout:fragment="content">
+		<div class="container">
+			<h1>Sign In</h1>
+			<div th:if="${param.error}" class="alert alert-danger">
+				The email or password entered is incorrect.
+			</div>
+			<div th:if="${param.signedup}" class="alert alert-success">
+				You signed up successfully. Please sign in.
+			</div>
+			<div th:if="${param.logout}" class="alert alert-success">
+				You have signed out successfully.
+			</div>
+			<div class="form-group">
+				<form th:action="@{/login}" method="POST">
+					<div class="form-group">
+						<input type="email" class="form-control" placeholder="Email" id="username" name="username" />
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="Password" id="password" name="password" />
+					</div>
+					<a href="/signup" class="themed-link">Sign Up</a>
+					<button class="btn btn-primary pull-right" type="submit">Sign In</button>
+				</form>
+			</div>
 		</div>
-        <div th:if="${param.signedup}" class="alert alert-success">
-		  You signed up successfully. Please sign in.
-		</div>
-        <div th:if="${param.logout}" class="alert alert-success">
-		  You have signed out successfully.
-		</div>
-        <div class="form-group">
-	        <form th:action="@{/login}" method="POST">
-	        	<div class="form-group">
-	               <input type="email" class="form-control" placeholder="Email" id="username" name="username" />
-	            </div>
-	        	<div class="form-group">
-	               <input type="password" class="form-control" placeholder="Password" id="password" name="password" />
-	           	</div>
-              	<a href="/signup">Sign Up</a>
-               <button class="btn btn-primary pull-right" type="submit">Sign In</button>
-	        </form>
-        </div>
-	</div>
-</body>
-
+	</body>
 </html>

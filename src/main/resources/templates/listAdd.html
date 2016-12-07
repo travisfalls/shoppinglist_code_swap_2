@@ -2,40 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layouts/basic">
-
-<head>
-<title>Lists</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-
-<body layout:fragment="content">
-	<div class="container">
-	<h1>Add A List</h1>
-		<form method="POST" th:object="${list}">
-			<input type="hidden" name="id" th:value="*{id}"/>
-			<input type="hidden" th:field="*{user}"/>
-			<div class="form-group">
-				<label for="name">Name</label> <input type="text" name="name"
-					class="form-control" placeholder="Name" th:field="*{name}" /> <span
-					th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+	<head>
+		<title>Lists</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body layout:fragment="content">
+		<div class="container">
+			<h1>Add A List</h1>
+			<form method="POST" th:object="${list}">
+				<input type="hidden" name="id" th:value="*{id}"/>
+				<input type="hidden" th:field="*{user}"/>
+				<div class="form-group">
+					<label for="name">Name</label> <input type="text" name="name"
+						class="form-control" placeholder="Name" th:field="*{name}" /> <span
+						th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
 					Error</span>
-			</div>
-			<div class="form-group">
-				<label>Color Selection</label>
-				<input class="form-control" type="text" id="manualColor" name="manualColor" placeholder="Enter Hex Code" />
-				<p>or</p>
-				<select class="form-control" th:field="*{color}">
-					 <option value="#">Choose color</option>
-		 			 <option value="#990000">Medium Red</option>
-		 			 <option value="#E33333">Bright Red</option>
-		 			 <option value="#660000">Dark Red</option>
-		 			 <option value="#666666">Dark Gray</option>
-		 			 <option value="#CCCCCC">Light Gray</option>
-		 			 <option value="#FFFFFF">White</option>
-				</select>
-			</div>
-               <button class="btn btn-primary pull-right" type="submit">Create</button>
-		</form>
-	</div>
-</body>
+				</div>
+				<div class="form-group">
+					<label>Color Selection</label>
+					<input class="form-control" type="text" id="manualColor" name="manualColor" placeholder="Enter Hex Code" />
+					<p>or</p>
+					<select class="form-control" th:field="*{color}">
+						<option value="#">Choose color</option>
+						<option value="#990000">Medium Red</option>
+						<option value="#E33333">Bright Red</option>
+						<option value="#660000">Dark Red</option>
+						<option value="#666666">Dark Gray</option>
+						<option value="#CCCCCC">Light Gray</option>
+						<option value="#FFFFFF">White</option>
+					</select>
+				</div>
+				<button class="btn btn-primary pull-right" type="submit">Create</button>
+			</form>
+		</div>
+	</body>
 </html>

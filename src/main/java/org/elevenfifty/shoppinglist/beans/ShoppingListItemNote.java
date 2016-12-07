@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 @Entity
 @Table(name = "shopping_list_item_notes")
 public class ShoppingListItemNote {
@@ -19,7 +17,7 @@ public class ShoppingListItemNote {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@NotBlank
+	@NotNull
 	private String body;
 
 	@NotNull
