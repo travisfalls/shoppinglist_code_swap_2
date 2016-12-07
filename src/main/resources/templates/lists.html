@@ -21,9 +21,9 @@
 				<tr th:each="list : ${lists}">
 					<td th:text="${list.name}" th:style="@{|color: ${list.color};|}" style="vertical-align: middle;"></td>
 					<td style="vertical-align: middle;">
-					<a class="btn btn-primary" th:href="@{|/lists/${lists.id}|}">View</a>
+					<a class="btn btn-primary" th:href="@{|/lists/${list.id}|}">View</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a class="btn btn-primary" th:href="@{|/lists/${lists.id}/delete|}">Delete</a></td>
+					<a class="btn btn-primary" th:href="@{|/lists/${list.id}/delete|}">Delete</a></td>
 
 				</tr>
 			</tbody>
