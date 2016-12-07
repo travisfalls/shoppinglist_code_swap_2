@@ -1,7 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS shopping_list;
-USE shopping_list;
+USE heroku_5e006be6efd68c2;
 	
-CREATE TABLE IF NOT EXISTS shopping_list.users (
+CREATE TABLE IF NOT EXISTS heroku_5e006be6efd68c2.users (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	email VARCHAR(128) NOT NULL,
 	password VARCHAR(128) NOT NULL,
@@ -12,38 +11,30 @@ CREATE TABLE IF NOT EXISTS shopping_list.users (
 	role VARCHAR(128) NOT NULL DEFAULT 'USER',
 	PRIMARY KEY (id));
 
-CREATE TABLE IF NOT EXISTS shopping_list.shopping_list_groups (
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	name VARCHAR(128) NOT NULL,
-	created_utc TIMESTAMP NOT NULL,
-	modified_utc TIMESTAMP NOT NULL,
-	PRIMARY KEY (id));
-
-CREATE TABLE IF NOT EXISTS shopping_list.shopping_lists (
+CREATE TABLE IF NOT EXISTS heroku_5e006be6efd68c2.shopping_lists (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	user_id INT UNSIGNED NULL,
 	name VARCHAR(128) NOT NULL,
 	color VARCHAR(7) NOT NULL DEFAULT '#000000',
-	shopping_list_group_id INT UNSIGNED NULL,
 	created_utc TIMESTAMP NOT NULL,
 	modified_utc TIMESTAMP NOT NULL,
 	PRIMARY KEY (id));
 	
-CREATE TABLE IF NOT EXISTS shopping_list.shopping_list_item_priorities (
+CREATE TABLE IF NOT EXISTS heroku_5e006be6efd68c2.shopping_list_item_priorities (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	name VARCHAR(128) NOT NULL,
 	created_utc TIMESTAMP NOT NULL,
 	modified_utc TIMESTAMP NOT NULL,
 	PRIMARY KEY (id));
 	
-CREATE TABLE IF NOT EXISTS shopping_list.shopping_list_item_notes (
+CREATE TABLE IF NOT EXISTS heroku_5e006be6efd68c2.shopping_list_item_notes (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	body VARCHAR(500) NOT NULL,
 	created_utc TIMESTAMP NOT NULL,
 	modified_utc TIMESTAMP NOT NULL,
 	PRIMARY KEY (id));
 	
-CREATE TABLE IF NOT EXISTS shopping_list.shopping_list_items (
+CREATE TABLE IF NOT EXISTS heroku_5e006be6efd68c2.shopping_list_items (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	shopping_list_id INT UNSIGNED NOT NULL,
 	name VARCHAR(128) NOT NULL,
