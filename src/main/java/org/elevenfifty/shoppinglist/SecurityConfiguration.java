@@ -16,7 +16,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		// httpSecurity.authorizeRequests().anyRequest().permitAll();
 		httpSecurity//
 				.authorizeRequests().antMatchers("/h2-console/**").permitAll()//
 				.and()//
@@ -41,9 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource).rolePrefix("").passwordEncoder(new PlaintextPasswordEncoder())
 				.usersByUsernameQuery(
-						"select email as username, password, active as enabled from shopping_list.users where email = ?")
+						"select email as username, password, active as enabled from heroku_5e006be6efd68c2.users where email = ?")
 				.authoritiesByUsernameQuery(
-						"select email as username, role as authority from shopping_list.users where email = ?");
+						"select email as username, role as authority from heroku_5e006be6efd68c2.users where email = ?");
 	}
 
 }
