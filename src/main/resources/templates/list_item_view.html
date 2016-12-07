@@ -21,7 +21,7 @@
 				<td><strong>Name:</strong></td>
 				<td th:text="${listItem.name}"></td>
 			</tr>
-			<tr>
+			<tr th:if="${listItem.shoppingListItemNote}">
 				<td><strong>Note:</strong></td>
 				<td th:if="${listItem.shoppingListItemNote} != null"
 					th:text="${listItem.shoppingListItemNote.body}"></td>
@@ -34,9 +34,7 @@
 				<td th:if="!${listItem.checked}">No</td>
 			</tr>
 		</table>
-		<a th:href="@{|/lists/${listItem.shoppingList.id}|}" class="pull-left"><button
-				class="btn btn-primary">&lt;</button></a> <a
-			th:href="@{|/lists/${listItem.shoppingList.id}/items/${listItem.id}/edit|}"
+		<a th:href="@{|/lists/${listItem.shoppingList.id}/items/${listItem.id}/edit|}"
 			class="pull-right"><button class="btn btn-primary">Edit</button></a>
 	</div>
 </body>
