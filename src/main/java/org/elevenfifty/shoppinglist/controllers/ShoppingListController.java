@@ -46,7 +46,7 @@ public class ShoppingListController {
 		return "lists";
 	}
 
-	@GetMapping("/lists/{listId}") // with check to see if user has access
+	@GetMapping("/lists/{listId}")
 	public String list(Model model, @PathVariable(name = "listId") long listId) {
 		model.addAttribute("listId", listId);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -112,7 +112,8 @@ public class ShoppingListController {
 
 	@PostMapping("/lists/{listId}/delete")
 	public String shoppingListDeleteSave(@PathVariable(name = "listId") long listId, Model model) {
-		shoppingListRepo.delete(listId);
+		// FIXME
+		// shoppingListRepo.delete(listId);
 		return "redirect: /lists";
 	}
 
