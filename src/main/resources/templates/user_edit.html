@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/basic">
-
-<head>
-    <title>Edit User</title>
-</head>
-
-<body layout:fragment="content">
-        <div class="container">
-            <h1>Edit Profile</h1>
-            <form method="POST" th:object="${user}" id="userForm" enctype="multipart/form-data">
-	            <input type="hidden" class="form-control" th:field="*{id}" />
-	            <input type="hidden" class="form-control" th:field="*{role}" />
-	            <div class="form-group">
-		            <input type="text" class="form-control" th:field="*{fullName}" placeholder="Full Name" />
-		            <span class="alert alert-warning" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Full Name Error</span>
+	<head>
+		<title>Edit User</title>
+	</head>
+	<body layout:fragment="content">
+		<div class="container">
+			<h1>Edit Profile</h1>
+			<form method="POST" th:object="${user}" id="userForm" enctype="multipart/form-data">
+				<input type="hidden" class="form-control" th:field="*{id}" />
+				<input type="hidden" class="form-control" th:field="*{role}" />
+				<div class="form-group">
+					<input type="text" class="form-control" th:field="*{fullName}" placeholder="Full Name" />
+					<span class="alert alert-warning" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Full Name Error</span>
 				</div>
 				<div class="form-group">
-		            <input type="text" class="form-control" th:field="*{email}" placeholder="Email" />
-		            <span class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
-		        </div>
-		        <div class="form-group">
-		            <input type="password" class="form-control" th:field="*{password}" placeholder="Password" />
-		            <span class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
-	            </div>
-	            <button class="btn btn-primary pull-right" type="submit">Submit</button>
-            </form>
-        </div>
-</body>
-
+					<input type="text" class="form-control" th:field="*{email}" placeholder="Email" />
+					<span class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" th:field="*{password}" placeholder="Password" />
+					<span class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
+				</div>
+				<button class="btn btn-primary pull-right" type="submit">Submit</button>
+			</form>
+		</div>
+	</body>
 </html>
