@@ -11,4 +11,10 @@ public interface ShoppingListItemRepository extends CrudRepository<ShoppingListI
 
 	ArrayList<ShoppingListItem> findByShoppingListId(long shoppingListId);
 
+	ArrayList<ShoppingListItem> findByShoppingListIdOrderByNameAsc(long shoppingListId);
+
+	ArrayList<ShoppingListItem> findByShoppingListIdOrderByNameDesc(long shoppingListId);
+
+	ArrayList<ShoppingListItem> findByShoppingListIdOrderByShoppingListItemPriorityIdDesc(long shoppingListId);
+
 }
