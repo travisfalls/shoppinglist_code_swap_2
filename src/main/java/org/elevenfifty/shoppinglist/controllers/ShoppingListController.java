@@ -1,8 +1,11 @@
 package org.elevenfifty.shoppinglist.controllers;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.elevenfifty.shoppinglist.beans.ShoppingList;
+import org.elevenfifty.shoppinglist.beans.ShoppingListItem;
 import org.elevenfifty.shoppinglist.beans.User;
 import org.elevenfifty.shoppinglist.repositories.ShoppingListItemRepository;
 import org.elevenfifty.shoppinglist.repositories.ShoppingListRepository;
@@ -47,7 +50,8 @@ public class ShoppingListController {
 	}
 
 	@GetMapping("/lists/{listId}")
-	public String list(Model model, @PathVariable(name = "listId") long listId) {
+	public String list(Model model, @PathVariable(name = "listId") long listId,
+			@RequestParam(name = "sort", required = false) String sort) {
 		model.addAttribute("listId", listId);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
@@ -55,7 +59,24 @@ public class ShoppingListController {
 		if (shoppingListRepo.findOne(listId).getUser().equals(u)) {
 			model.addAttribute("user", u);
 			ShoppingList s = shoppingListRepo.findOne(listId);
-			model.addAttribute("listItems", shoppingListItemRepo.findByShoppingListId(listId));
+			if (sort == null)
+				sort = "";
+			ArrayList<ShoppingListItem> slis;
+			switch (sort) {
+			case "atoz":
+				slis = shoppingListItemRepo.findByShoppingListIdOrderByNameAsc(listId);
+				break;
+			case "ztoa":
+				slis = shoppingListItemRepo.findByShoppingListIdOrderByNameDesc(listId);
+				break;
+			case "priority":
+				slis = shoppingListItemRepo.findByShoppingListIdOrderByShoppingListItemPriorityIdDesc(listId);
+				break;
+			default:
+				slis = shoppingListItemRepo.findByShoppingListId(listId);
+				break;
+			}
+			model.addAttribute("listItems", slis);
 			model.addAttribute("shoppingList", s);
 			return "listView";
 		} else {
