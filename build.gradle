@@ -34,3 +34,10 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version:'5.1.13'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
